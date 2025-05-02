@@ -5,7 +5,8 @@ import numpy as np
 from numpy.typing import ArrayLike
 from typing import Union
 
-from lactopy.plots.base import Plot
+from lactopy.lactate_models.base.adaptors.polyAdapter import PolyAdaptor
+from lactopy.plots import Plot
 
 
 class BaseModel(BaseEstimator, RegressorMixin):
@@ -45,10 +46,10 @@ class BaseModel(BaseEstimator, RegressorMixin):
         match method:
             case "3th_poly":
                 # Fit a 3rd degree polynomial
-                self.model = np.polyfit(X, y, 3)
+                self.model = PolyAdaptor().fit(X, y, degree=3)
             case "2th_poly":
                 # Fit a 2nd degree polynomial
-                self.model = np.polyfit(X, y, 2)
+                self.model = PolyAdaptor().fit(X, y, degree=2)
             case "spline":
                 # Fit a spline
                 self.model = UnivariateSpline(X, y)
