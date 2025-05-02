@@ -21,8 +21,12 @@ class PolyAdaptor:
             (real_roots >= self.min_domain) & (real_roots <= self.max_domain)
         ]
         if len(real_roots_within_domain) < 1:
-            raise ("no solution was found")
+            raise ValueError("no solution was found")
         if len(real_roots_within_domain) > 1:
-            raise ("to many roots where found")
+            raise ValueError("to many roots where found")
 
         return real_roots_within_domain[0]
+
+    def dxdt(self):
+        self.p = np.polyder(self._coef)
+        return self

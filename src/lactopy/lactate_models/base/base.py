@@ -1,11 +1,11 @@
 from sklearn.base import BaseEstimator, RegressorMixin
-from scipy.interpolate import UnivariateSpline
 import numpy as np
 
 from numpy.typing import ArrayLike
 from typing import Union
 
-from lactopy.lactate_models.base.adaptors.polyAdapter import PolyAdaptor
+from lactopy.lactate_models.base.adaptors import PolyAdaptor, CubicAdaptor
+
 from lactopy.plots import Plot
 
 
@@ -41,18 +41,18 @@ class BaseModel(BaseEstimator, RegressorMixin):
             Fitted model.
         """
         self.validate_lactate_test(X, y)
-        X = np.array(X)
-        y = np.array(y)
+        self.X = np.array(X)
+        self.y = np.array(y)
         match method:
             case "3th_poly":
                 # Fit a 3rd degree polynomial
-                self.model = PolyAdaptor().fit(X, y, degree=3)
+                self.model = PolyAdaptor().fit(self.X, self.y, degree=3)
             case "2th_poly":
                 # Fit a 2nd degree polynomial
-                self.model = PolyAdaptor().fit(X, y, degree=2)
+                self.model = PolyAdaptor().fit(self.X, self.y, degree=2)
             case "spline":
                 # Fit a spline
-                self.model = UnivariateSpline(X, y)
+                self.model = CubicAdaptor().fit(self.X, self.y)
             case _:
                 raise ValueError(f"Unknown method: {method}")
 
