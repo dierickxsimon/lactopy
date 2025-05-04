@@ -7,7 +7,11 @@ authors = [
     { name = "Simon Dierickx", email = "simon.dierickx@ugent.be" }
 ]
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "numpy>=2.2.5",
+    "scikit-learn>=1.6.1",
+    "scipy>=1.15.2",
+]
 
 [build-system]
 requires = ["hatchling"]
@@ -15,5 +19,12 @@ build-backend = "hatchling.build"
 
 [dependency-groups]
 dev = [
+    "ipykernel>=6.29.5",
+    "matplotlib>=3.10.1",
+    "pandas>=2.2.3",
     "pre-commit>=4.2.0",
+    "pytest>=8.3.5",
 ]
+
+[tool.uv.sources]
+lactopy = { workspace = true }
