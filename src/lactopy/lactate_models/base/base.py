@@ -5,11 +5,14 @@ from numpy.typing import ArrayLike
 from typing import Union
 
 from lactopy.lactate_models.base.adaptors import PolyAdaptor, CubicAdaptor
+from lactopy.plots.base import Plot
 
 
 class BaseModel(BaseEstimator, RegressorMixin):
     def __init__(self):
         self.model = None
+        self.fitted = False
+        self.plot = Plot(self)
 
     def validate_lactate_test(self, X: ArrayLike, y: ArrayLike):
         if len(X) != len(y):
@@ -48,6 +51,7 @@ class BaseModel(BaseEstimator, RegressorMixin):
                 self.model = CubicAdaptor().fit(self.X, self.y)
             case _:
                 raise ValueError(f"Unknown method: {method}")
+        self.fitted = True
 
         return self
 
