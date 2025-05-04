@@ -19,7 +19,12 @@ build-backend = "hatchling.build"
 
 [dependency-groups]
 dev = [
+    "ipykernel>=6.29.5",
+    "matplotlib>=3.10.1",
     "pandas>=2.2.3",
     "pre-commit>=4.2.0",
     "pytest>=8.3.5",
 ]
+
+[tool.uv.sources]
+lactopy = { workspace = true }

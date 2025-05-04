@@ -8,3 +8,8 @@ wheels/
 
 # Virtual environments
 .venv
+
+
+#notebooks
+*.ipynb_checkpoints
+*.ipynb
