@@ -14,7 +14,7 @@ class BaseModel(BaseEstimator, RegressorMixin):
         self.fitted = False
         self.plot = Plot(self)
 
-    def validate_lactate_test(self, X: ArrayLike, y: ArrayLike):
+    def _validate_lactate_test(self, X: ArrayLike, y: ArrayLike):
         if len(X) != len(y):
             raise ValueError("X and y must have the same length.")
         if len(X) == 0:
@@ -24,19 +24,22 @@ class BaseModel(BaseEstimator, RegressorMixin):
         """
         Fit the model to the training data.
 
-        Parameters
-        ----------
-        X : array-like, shape (n_samples,)
-            Intensity data.
-        y : array-like, shape (n_samples,)
-            lactate values.
+        Args:
+            X (array-like):
+                Intensity data.
+            y (array-like):
+                lactate values.
+            method (str):
+                Method to use for fitting the model. Options are:
+                    - "3th_poly": 3rd degree polynomial
+                    - "4th_poly": 4th degree polynomial
+                    - "spline": Spline
 
-        Returns
-        -------
-        self : object
-            Fitted model.
+        Returns:
+            self (object):
+                Fitted model.
         """
-        self.validate_lactate_test(X, y)
+        self._validate_lactate_test(X, y)
         self.X = np.array(X)
         self.y = np.array(y)
         match method:
