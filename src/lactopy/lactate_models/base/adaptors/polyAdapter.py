@@ -14,7 +14,7 @@ class PolyAdaptor:
         return self.p(X)
 
     def predict_inverse(self, Y):
-        coef = self._coef.copy()
+        coef = self.p.coef.copy()
         coef[-1] -= Y
         roots = np.roots(coef)
         real_roots = roots[np.isreal(roots)].real
@@ -30,5 +30,5 @@ class PolyAdaptor:
         return real_roots_within_domain[-1]
 
     def dxdt(self):
-        self.p = np.polyder(self._coef)
+        self.p = np.poly1d(np.polyder(self._coef))
         return self
