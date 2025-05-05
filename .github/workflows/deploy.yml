@@ -23,6 +23,11 @@ jobs:
           pip install uv
           uv sync
 
+      - name: Configure Git
+        run: |
+          git config --global user.name "dierickxsimon"
+          git config --global user.email "simon.dierickx10@gmail.com"
+
       - name: Deploy to GitHub Pages
         run: uv run mkdocs gh-deploy --force
         env:
