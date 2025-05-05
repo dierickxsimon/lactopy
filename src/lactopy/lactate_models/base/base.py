@@ -10,8 +10,16 @@ from lactopy.plots.base import Plot
 
 class BaseModel(BaseEstimator, RegressorMixin):
     def __init__(self):
+        """
+        Atributes:
+
+            model (object):
+                Model object.
+            plot (object):
+                Plot object.
+
+        """
         self.model = None
-        self.fitted = False
         self.plot = Plot(self)
 
     def _validate_lactate_test(self, X: ArrayLike, y: ArrayLike):
@@ -31,9 +39,10 @@ class BaseModel(BaseEstimator, RegressorMixin):
                 lactate values.
             method (str):
                 Method to use for fitting the model. Options are:
-                    - "3th_poly": 3rd degree polynomial
-                    - "4th_poly": 4th degree polynomial
-                    - "spline": Spline
+
+                - `"3th_poly"`: 3rd degree polynomial
+                - `"4th_poly"`: 4th degree polynomial
+                - `"spline"`: Spline
 
         Returns:
             self (object):
@@ -44,18 +53,13 @@ class BaseModel(BaseEstimator, RegressorMixin):
         self.y = np.array(y)
         match method:
             case "3th_poly":
-                # Fit a 3rd degree polynomial
                 self.model = PolyAdaptor().fit(self.X, self.y, degree=3)
             case "4th_poly":
-                # Fit a 4th degree polynomial
                 self.model = PolyAdaptor().fit(self.X, self.y, degree=4)
             case "spline":
-                # Fit a spline
                 self.model = CubicAdaptor().fit(self.X, self.y)
             case _:
                 raise ValueError(f"Unknown method: {method}")
-        self.fitted = True
-
         return self
 
     def predict(self, X: Union[ArrayLike, float, int]):

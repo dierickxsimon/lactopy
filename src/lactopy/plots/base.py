@@ -21,9 +21,6 @@ class Plot:
         """
         Plot the model.
         """
-        if not self.base_lactate_model.fitted:
-            raise ValueError("Model is not fitted yet.")
-
         X = np.linspace(
             self.base_lactate_model.X.min(), self.base_lactate_model.X.max(), 100
         )
@@ -47,8 +44,6 @@ class Plot:
         """
         Plot the model predictions.
         """
-        if not self.base_lactate_model.fitted:
-            raise ValueError("Model is not fitted yet.")
         self.plot_fit()
         plt.axvline(
             self.base_lactate_model.predict(X),

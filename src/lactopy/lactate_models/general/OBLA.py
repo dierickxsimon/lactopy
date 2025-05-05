@@ -8,4 +8,15 @@ class OBLA(BaseModel):
     """
 
     def predict(self, lactate_value: float) -> float:
+        """
+        Predicts intensity at a given lactate value.
+
+        Args:
+            lactate_value (float):
+                Lactate value to predict intensity for.
+
+        Returns:
+            float:
+                Predicted intensity.
+        """
         return self.model.predict_inverse(lactate_value)

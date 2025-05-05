@@ -7,6 +7,14 @@ class Dmax(BaseModel):
     """
 
     def predict(self) -> float:
+        """
+        Predicts intensity for the Dmax method.
+
+        Returns:
+            float:
+                Predicted intensity.
+        """
+
         dxdt_first_last_value = (self.y.max() - self.y.min()) / (
             self.X.max() - self.X.min()
         )
