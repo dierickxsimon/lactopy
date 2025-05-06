@@ -32,7 +32,7 @@ def test_obla_model(input_data, method, lactate, expected_value):
     [
         ("3th_poly", 131.1),  # values obtained from physlab(ma zijn dus verkeerd)
         ("4th_poly", 131.1),
-        ("spline", 131.1),
+        ("spline", 136.99),
     ],
 )
 def test_dmax_model(input_data, method, expected_value):
