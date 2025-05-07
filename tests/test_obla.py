@@ -9,7 +9,7 @@ from lactopy.lactate_models.second_threshold.dmax import Dmax
 @pytest.mark.parametrize(
     "method, lactate, expected_value",
     [
-        ("3th_poly", 2, 104.6),  # values obtained from physlab(ma zijn dus verkeerd)
+        ("3th_poly", 2, 104.6),  # values obtained from physlab
         ("3th_poly", 3.5, 137),
         ("4th_poly", 3.5, 136.9),
         ("4th_poly", 4, 145.1),
@@ -23,15 +23,13 @@ def test_obla_model(input_data, method, lactate, expected_value):
         intensity_array, lactate_array, method=method
     ).predict(lactate)
     assert isinstance(predicted_lactate, float)
-    assert np.isclose(
-        predicted_lactate, expected_value, atol=3
-    )  # is nodig want exphyslab suckt
+    assert np.isclose(predicted_lactate, expected_value, atol=3)
 
 
 @pytest.mark.parametrize(
     "method, expected_value",
     [
-        ("3th_poly", 131.1),  # values obtained from physlab(ma zijn dus verkeerd)
+        ("3th_poly", 131.1),  # values obtained from physlab
         ("4th_poly", 131.1),
         ("spline", 136.99),
     ],
