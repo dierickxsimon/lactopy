@@ -2,6 +2,7 @@ import pytest
 import numpy as np
 
 from lactopy.lactate_models.general.OBLA import OBLA
+from lactopy.lactate_models.general.bsln import Bsln
 from lactopy.lactate_models.second_threshold.dmax import Dmax
 
 
@@ -43,3 +44,13 @@ def test_dmax_model(input_data, method, expected_value):
     ).predict()
     assert isinstance(predicted_lactate, float)
     assert np.isclose(predicted_lactate, expected_value, atol=3)
+
+
+@pytest.mark.parametrize("method", ["3th_poly", "4th_poly", "spline"])
+def test_bsln_model(input_data, method):
+    lactate_array, intensity_array = input_data
+    model = Bsln()
+    predicted_lactate = model.fit(
+        intensity_array, lactate_array, method=method
+    ).predict(1.2)
+    assert isinstance(predicted_lactate, float)
