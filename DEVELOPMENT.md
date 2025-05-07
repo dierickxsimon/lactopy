@@ -56,3 +56,11 @@ To run tests, run either `uv run pytest`.
 ## Pre-commit hooks
 
 To install the pre-commit hooks run the command `uv run pre-commit install`. Now `pre-commit` will run automatically on `git commit`.
+
+
+## Documentation
+To run the documentation locally run following command:
+
+```bash
+uv run mkdocs serve
+```
