@@ -1,9 +1,9 @@
 import pytest
 import numpy as np
 
-from lactopy.lactate_models.general.OBLA import OBLA
-from lactopy.lactate_models.general.bsln import Bsln
-from lactopy.lactate_models.second_threshold.dmax import Dmax
+from lactopy.lactate_models.OBLA import OBLA
+from lactopy.lactate_models.bsln import Bsln
+from lactopy.lactate_models.dmax import Dmax
 
 
 @pytest.mark.parametrize(

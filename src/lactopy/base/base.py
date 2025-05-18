@@ -4,7 +4,7 @@ import numpy as np
 from numpy.typing import ArrayLike
 from typing import Union
 
-from lactopy.lactate_models.base.adaptors import PolyAdaptor, CubicAdaptor
+from lactopy.base.adaptors import PolyAdaptor, CubicAdaptor
 from lactopy.plots.base import Plot
 
 

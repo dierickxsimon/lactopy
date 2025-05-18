@@ -1,4 +1,4 @@
-from lactopy.lactate_models.base import BaseModel
+from lactopy.base import BaseModel
 
 
 class Dmax(BaseModel):

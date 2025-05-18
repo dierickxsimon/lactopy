@@ -1,4 +1,4 @@
-from lactopy.lactate_models.base.base import BaseModel
+from lactopy.base.base import BaseModel
 
 
 class OBLA(BaseModel):
