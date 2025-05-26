@@ -1,3 +1,4 @@
+import copy
 import numpy as np
 
 
@@ -30,5 +31,6 @@ class PolyAdaptor:
         return real_roots_within_domain[-1]
 
     def dxdt(self):
-        self.p = np.poly1d(np.polyder(self._coef))
-        return self
+        r_obj = copy.deepcopy(self)
+        r_obj.p = np.poly1d(np.polyder(r_obj._coef))
+        return r_obj
