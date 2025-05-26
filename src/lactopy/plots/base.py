@@ -31,6 +31,7 @@ class Plot:
             color="blue",
             label="Data",
         )
+        print(self.base_lactate_model.model.predict(X))
         plt.plot(
             X, self.base_lactate_model.model.predict(X), color="red", label="Model"
         )
