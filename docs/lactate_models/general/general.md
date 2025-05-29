@@ -1,1 +1,1 @@
-:::lactopy.lactate_models.general.OBLA.OBLA
+:::lactopy.lactate_models.OBLA

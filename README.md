@@ -4,10 +4,8 @@ A python package to analyse lactate based tresholds. Strongly inspired by [lacte
 
 docs can be found: https://dierickxsimon.github.io/lactopy/
 
-Still a work in progress...
 
-
-`lactopy` can be installed with pip:
+`lactopy` can be installed with `pip`:
 
 ```bash
 pip install lactopy

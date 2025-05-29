@@ -1,1 +1,1 @@
-:::lactopy.lactate_models.second_threshold.dmax.Dmax
+:::lactopy.lactate_models.Dmax
