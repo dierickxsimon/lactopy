@@ -1,2 +1,1 @@
-def hello() -> str:
-    return "Hello from lactopy!"
+from .lactate_models import OBLA, Bsln, Dmax  # noqa: F401

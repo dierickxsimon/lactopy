@@ -26,8 +26,16 @@ class Plot:
         )
         plt.figure(figsize=(10, 6))
         plt.scatter(
-            self.base_lactate_model.X,
-            self.base_lactate_model.y,
+            (
+                self.base_lactate_model.X_raw_for_plot
+                if hasattr(self.base_lactate_model, "X_raw_for_plot")
+                else self.base_lactate_model.X
+            ),
+            (
+                self.base_lactate_model.y_raw_for_plot
+                if hasattr(self.base_lactate_model, "y_raw_for_plot")
+                else self.base_lactate_model.y
+            ),
             color="blue",
             label="Data",
         )

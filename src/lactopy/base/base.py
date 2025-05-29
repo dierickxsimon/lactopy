@@ -42,7 +42,7 @@ class BaseModel(BaseEstimator, RegressorMixin):
 
                 - `"3th_poly"`: 3rd degree polynomial
                 - `"4th_poly"`: 4th degree polynomial
-                - `"spline"`: Spline
+                - `"spline"`: Cubic Spline
 
         Returns:
             self (object):
