@@ -1,9 +1,9 @@
 import pytest
 import numpy as np
 
-from lactopy.lactate_models.OBLA import OBLA
-from lactopy.lactate_models.bsln import Bsln
-from lactopy.lactate_models.dmax import Dmax
+from lactopy.lactate_models import OBLA
+from lactopy.lactate_models import Bsln
+from lactopy.lactate_models import Dmax
 
 
 @pytest.mark.parametrize(

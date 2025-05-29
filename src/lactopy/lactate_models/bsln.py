@@ -1,4 +1,4 @@
-from lactopy.lactate_models.OBLA import OBLA
+from lactopy.lactate_models.obla import OBLA
 
 
 class Bsln(OBLA):
