@@ -34,7 +34,7 @@ To add a development dependency, run `uv add --dev <dependency>`.
 
 ## Testing
 
-To run tests, run either `uv run pytest`.
+To run tests, run `uv run pytest`.
 
 
 
@@ -43,7 +43,7 @@ To run tests, run either `uv run pytest`.
 - Never push to `main` directly
 - Create feature branches named `feature/{initials}_{feature_slug}` (e.g. `git checkout -b feature/sd_my_awesome_feature`)
 - Create a Pull Request to `main` when ready
-- Try not to merge your own PRs (we might enforce stricter rules later but for now let's keep it simple and fast)
+- Try not to merge your own PRs
 
 
 ## Pre-PR checklist

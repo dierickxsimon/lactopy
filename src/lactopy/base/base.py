@@ -1,8 +1,9 @@
+from numpy.typing import ArrayLike
+from typing import Union
+
 from sklearn.base import BaseEstimator, RegressorMixin
 import numpy as np
 
-from numpy.typing import ArrayLike
-from typing import Union
 
 from lactopy.base.adaptors import PolyAdaptor, CubicAdaptor
 from lactopy.plots.base import Plot
@@ -28,7 +29,7 @@ class BaseModel(BaseEstimator, RegressorMixin):
         if len(X) == 0:
             raise ValueError("X and y must not be empty.")
 
-    def fit(self, X: ArrayLike, y: ArrayLike, method="3th_poly"):
+    def fit(self, X: ArrayLike, y: ArrayLike, method="4th_poly"):
         """
         Fit the model to the training data.
 
