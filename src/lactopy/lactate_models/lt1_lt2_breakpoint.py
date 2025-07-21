@@ -9,24 +9,19 @@ from lactopy.plots.lt1_lt2_breakpoint_plot import LT1_LT2_breakpoint_Plot
 
 class LT1_LT2_breakpoint(BaseModel):
     """
-    Determining 
-
-    Log-Log method is used to estimate the first lactate threshold by plotting
-    the lactate response against intensity on a logaritmic scale.
+    Determining both LT1 and LT2 based on the breakpoints in the lactate curve
+    Piecewie regression module is used to identify the breakpoints
     
-    Plot is divided into 2 segments --> segmented regression identifies brekpoint
+    Plot is divided into 3 segments --> segmented regression identifies breakpoint
 
-    This is computed by using a standard value, preferably equlual to the lowest 
-    detectable change in lactate concentration of the measurement tool
 
     Attributes:
-        plot (lt1_si_plot): For visualizing the model..
+        plot (lt1_lt2_breakpoint_plot): For visualizing the model.
     """
 
     def __init__(self):
         """
-        Initializes the LT1_si model and its associated plot.
-
+        Initializes the LT1_LT2_breakpoint model and its associated plot.
         """
         super().__init__()
         self.plot = LT1_LT2_breakpoint_Plot(self)
@@ -39,7 +34,7 @@ class LT1_LT2_breakpoint(BaseModel):
         **kwargs,
     ):
         """
-        Fits the Standard Increment model to the given data.
+        Fits the LT1_LT2_breakpoint model to the given data.
 
         Args:
             X (ArrayLike): The independent variable (e.g., intensity).
@@ -77,7 +72,7 @@ class LT1_LT2_breakpoint(BaseModel):
 
     def predict(self) -> float:
         """
-        Predicts intensity for the LT1_si method.
+        Predicts intensity for LT1 and LT2 method. 
 
         Returns:
             float: Predicted intensity.

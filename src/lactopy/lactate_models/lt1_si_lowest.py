@@ -59,7 +59,7 @@ class LT1_si_lowest(BaseModel):
                 Defaults to "4th_poly".
 
         Returns:
-            self: Fitted Dmax model instance.
+            self: Fitted LT1_si_lowest model instance.
         """
         self._si = si
 

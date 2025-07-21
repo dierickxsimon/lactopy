@@ -5,7 +5,7 @@ from lactopy.plots.base import Plot
 
 class LT1_loglog_Plot(Plot):
     """
-    Plot for LT1 si model.
+    Plot for lt1_loglog model.
     """
 
     def __init__(self, base_lactate_LT1_si_model):
@@ -13,15 +13,15 @@ class LT1_loglog_Plot(Plot):
 
     def plot_fit(self):
         """
-        Plot the LT1 si model fit.
+        Plot the lt1_loglog model fit.
         """
         ax = super().plot_fit()
-        ax.set_title("LT1 Standard Increment Model Fit")
+        ax.set_title("LT1 Log-Log Model Fit")
         return ax
 
     def plot_predictions(self):
         """
-        Plot the LT1 model predictions.
+        Plot the lt1_loglog predictions.
         """
         self.plot_fit()
         plt.axvline(

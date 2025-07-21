@@ -4,29 +4,31 @@ import copy
 import piecewise_regression
 
 from lactopy.base import BaseModel
-from lactopy.plots.lt1_loglog_plot import LT1_loglog_Plot
+from lactopy.plots.lt2_breakpoint_plot import LT2_breakpoint_Plot
 
 
-class LT1_loglog(BaseModel):
+class LT2_breakpoint(BaseModel):
     """
-    Log-Log model for lactate threshold estimation.
+    Determining 
 
     Log-Log method is used to estimate the first lactate threshold by plotting
     the lactate response against intensity on a logaritmic scale.
     
-    Plot is divided into 2 segments --> segmented regression identifies breakpoint
+    Plot is divided into 2 segments --> segmented regression identifies breakpoints
+
+    The second breakpoint which corresponds to LT2 is extracted
 
     Attributes:
-        plot (lt1_loglog_plot): For visualizing the model..
+        plot (lt2_breakpoint_plot): For visualizing the model.
     """
 
     def __init__(self):
         """
-        Initializes the lt1_loglog model and its associated plot.
+        Initializes the LT2_breakpoint model and its associated plot.
 
         """
         super().__init__()
-        self.plot = LT1_loglog_Plot(self)
+        self.plot = LT2_breakpoint_Plot(self)
 
     def fit(
         self,
@@ -36,7 +38,7 @@ class LT1_loglog(BaseModel):
         **kwargs,
     ):
         """
-        Fits the lt1_loglog model to the given data.
+        Fits the LT2_breakpoint model to the given data.
 
         Args:
             X (ArrayLike): The independent variable (e.g., intensity).
@@ -56,7 +58,7 @@ class LT1_loglog(BaseModel):
                 Defaults to "4th_poly".
 
         Returns:
-            self: Fitted lt1_loglog model instance.
+            self: Fitted LT2_breakpoint model instance.
         """
         self._si = si
 
@@ -74,7 +76,7 @@ class LT1_loglog(BaseModel):
 
     def predict(self) -> float:
         """
-        Predicts intensity for the lt1_loglog method.
+        Predicts intensity for the LT2_breakpoint method.
 
         Returns:
             float: Predicted intensity.
@@ -84,13 +86,13 @@ class LT1_loglog(BaseModel):
         pw_fit = piecewise_regression.Fit(self.X, self.y, n_breakpoints=2)
         pw_results = pw_fit.get_results()
         
-        if "breakpoint1" not in pw_results.get("estimates", {}):
+        if "breakpoint2" not in pw_results.get("estimates", {}):
             raise ValueError(
-                f"'breakpoint1' not found in regression results."
+                f"'breakpoint2' not found in regression results."
                 f"It is recommended to use a different treshold estimation method."
                 f"Piecewise regression may have failed. Result: {pw_results}"
             )
         else:
-            predicted_x = pw_results["estimates"]["breakpoint1"]["estimate"]
+            predicted_lt2 = pw_results["estimates"]["breakpoint2"]["estimate"]
 
-        return predicted_x
+        return predicted_lt2
