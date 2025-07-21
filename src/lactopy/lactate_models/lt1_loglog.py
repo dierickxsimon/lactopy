@@ -87,5 +87,13 @@ class LT1_loglog(BaseModel):
         pw_fit = piecewise_regression.Fit(self.X, self.y, n_breakpoints=1)
         pw_results = pw_fit.get_results()
         
+        if "breakpoint1" not in pw_results.get("estimates", {}):
+            raise ValueError(
+                f"'breakpoint1' not found in regression results."
+                f"It is recommended to use a different treshold estimation method."
+                f"Piecewise regression may have failed. Result: {pw_results}"
+            )
+        else:
+            predicted_x = pw_results["estimates"]["breakpoint1"]["estimate"]
 
-        return pw_results["breakpoint1"]["estimate"]
+        return predicted_x
