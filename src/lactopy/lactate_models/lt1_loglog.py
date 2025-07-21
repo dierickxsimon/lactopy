@@ -84,7 +84,7 @@ class LT1_loglog(BaseModel):
             
         """
         
-        pw_fit = piecewise_regression.Fit(self.X, self.y, n_breakpoints=1)
+        pw_fit = piecewise_regression.Fit(self.X, self.y, n_breakpoints=2)
         pw_results = pw_fit.get_results()
         
         if "breakpoint1" not in pw_results.get("estimates", {}):
