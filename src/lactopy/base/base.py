@@ -1,11 +1,11 @@
 from numpy.typing import ArrayLike
-from typing import Union
+from typing import Union, Self
 
 from sklearn.base import BaseEstimator, RegressorMixin
 import numpy as np
 
 
-from lactopy.base.adaptors import PolyAdaptor, CubicAdaptor
+from lactopy.base.adaptors import PolyAdaptor, CubicAdaptor, ExpAdaptor
 from lactopy.plots.base import Plot
 
 
@@ -23,13 +23,13 @@ class BaseModel(BaseEstimator, RegressorMixin):
         self.model = None
         self.plot = Plot(self)
 
-    def _validate_lactate_test(self, X: ArrayLike, y: ArrayLike):
+    def _validate_lactate_test(self, X: ArrayLike, y: ArrayLike) -> None:
         if len(X) != len(y):
             raise ValueError("X and y must have the same length.")
         if len(X) == 0:
             raise ValueError("X and y must not be empty.")
 
-    def fit(self, X: ArrayLike, y: ArrayLike, method="4th_poly"):
+    def fit(self, X: ArrayLike, y: ArrayLike, method: str = "4th_poly") -> Self:
         """
         Fit the model to the training data.
 
@@ -59,6 +59,8 @@ class BaseModel(BaseEstimator, RegressorMixin):
                 self.model = PolyAdaptor().fit(self.X, self.y, degree=4)
             case "spline":
                 self.model = CubicAdaptor().fit(self.X, self.y)
+            case "exp":
+                self.model = ExpAdaptor().fit(self.X, self.y)
             case _:
                 raise ValueError(f"Unknown method: {method}")
         return self

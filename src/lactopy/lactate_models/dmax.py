@@ -1,3 +1,4 @@
+from typing import Self
 from numpy.typing import ArrayLike
 import copy
 
@@ -34,9 +35,9 @@ class Dmax(BaseModel):
         X: ArrayLike,
         y: ArrayLike,
         impl: str = "normal",
-        threshold_above_baseline=0.4,
+        threshold_above_baseline: float = 0.4,
         **kwargs,
-    ):
+    ) -> Self:
         """
         Fits the Dmax model to the given data.
 
