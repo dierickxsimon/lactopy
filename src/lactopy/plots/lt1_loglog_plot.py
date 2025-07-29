@@ -8,8 +8,8 @@ class LT1_loglog_Plot(Plot):
     Plot for lt1_loglog model.
     """
 
-    def __init__(self, base_lactate_LT1_si_model):
-        super().__init__(base_lactate_LT1_si_model)
+    def __init__(self, base_log_log_model):
+        super().__init__(base_log_log_model)
 
     def plot_fit(self):
         """

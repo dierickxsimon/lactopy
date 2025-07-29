@@ -8,8 +8,8 @@ class LT2_breakpoint_Plot(Plot):
     Plot for LT2_breakpoint model.
     """
 
-    def __init__(self, base_lactate_LT1_si_model):
-        super().__init__(base_lactate_LT1_si_model)
+    def __init__(self, base_lactate_LT2_breakpoint_model):
+        super().__init__(base_lactate_LT2_breakpoint_model)
 
     def plot_fit(self):
         """

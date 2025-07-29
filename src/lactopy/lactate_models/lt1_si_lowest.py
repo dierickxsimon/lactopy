@@ -67,13 +67,8 @@ class LT1_si_lowest(BaseModel):
         # feels wrong to me
         self.X_raw_for_plot = X
         self.y_raw_for_plot = y
-        
-        # Ensure working on copies
-        X = np.asarray(copy.deepcopy(X))
-        y = np.asarray(copy.deepcopy(y))
 
         if si > 0 :
-            X, y = copy.deepcopy(X), copy.deepcopy(y)
             min_y_idx = np.argmin(y) # get the index of the lowest y
             self.min_y_idx = min_y_idx
             self.x_at_min_y = X[min_y_idx]

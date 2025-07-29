@@ -67,13 +67,11 @@ class LT1_si(BaseModel):
         self.y_raw_for_plot = y
 
         if si > 0 :
-            X, y = copy.deepcopy(X), copy.deepcopy(y)
             y_lt1 = y[0] + si
             self.y_lt1 = y_lt1
         else:
             raise ValueError(f"Impossible lactate change to find LT1: {si}")
 
-        self.X = X
         self.y = y
         
         super().fit(X, y, **kwargs)

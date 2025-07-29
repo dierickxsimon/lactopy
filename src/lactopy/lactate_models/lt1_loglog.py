@@ -32,7 +32,6 @@ class LT1_loglog(BaseModel):
         self,
         X: ArrayLike,
         y: ArrayLike,
-        si: float = 0.5,
         **kwargs,
     ):
         """
@@ -42,9 +41,6 @@ class LT1_loglog(BaseModel):
             X (ArrayLike): The independent variable (e.g., intensity).
             y (ArrayLike): The dependent variable (e.g., lactate concentration).
             si: the standard increment, defaults to 0.5
-            
-            threshold_above_baseline (float, optional): Threshold above baseline
-            for filtering in the "modified" implementation. Defaults to 0.5.
 
             method (str):
                 Method to use for fitting the model. Options are:
@@ -58,18 +54,15 @@ class LT1_loglog(BaseModel):
         Returns:
             self: Fitted lt1_loglog model instance.
         """
-        self._si = si
+
+        y_log = np.log(y)
 
         # I have no clue if this is the best options
         # feels wrong to me
         self.X_raw_for_plot = X
-        self.y_raw_for_plot = y
+        self.y_raw_for_plot = y_log
         
-        # Ensure working on copies
-        self.X = np.asarray(copy.deepcopy(X))
-        self.y = np.asarray(copy.deepcopy(y))
-        
-        super().fit(X, y, **kwargs)
+        super().fit(X, y_log, **kwargs)
         return self
 
     def predict(self) -> float:
@@ -81,7 +74,7 @@ class LT1_loglog(BaseModel):
             
         """
         
-        pw_fit = piecewise_regression.Fit(self.X, self.y, n_breakpoints=2)
+        pw_fit = piecewise_regression.Fit(self.X, self.y, n_breakpoints=1)
         pw_results = pw_fit.get_results()
         
         if "breakpoint1" not in pw_results.get("estimates", {}):
