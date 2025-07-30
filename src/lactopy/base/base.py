@@ -28,8 +28,9 @@ class BaseModel(BaseEstimator, RegressorMixin):
             raise ValueError("X and y must have the same length.")
         if len(X) == 0:
             raise ValueError("X and y must not be empty.")
+        return X, y
 
-    def fit(self, X: ArrayLike, y: ArrayLike, method="4th_poly"):
+    def fit(self, X: ArrayLike, y: ArrayLike, method="4th_poly", _mask=None):
         """
         Fit the model to the training data.
 
@@ -49,9 +50,14 @@ class BaseModel(BaseEstimator, RegressorMixin):
             self (object):
                 Fitted model.
         """
-        self._validate_lactate_test(X, y)
-        self.X = np.array(X)
-        self.y = np.array(y)
+
+        X, y = self._validate_lactate_test(X, y)
+        mask = _mask if _mask is not None else np.ones_like(X, dtype=bool)
+        self.X_raw_for_plot = X
+        self.y_raw_for_plot = y
+
+        self.X = np.array(X)[mask]
+        self.y = np.array(y)[mask]
         match method:
             case "3th_poly":
                 self.model = PolyAdaptor().fit(self.X, self.y, degree=3)

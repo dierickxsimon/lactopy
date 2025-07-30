@@ -1,5 +1,5 @@
+import numpy as np
 from numpy.typing import ArrayLike
-import copy
 
 
 from lactopy.base import BaseModel
@@ -63,24 +63,18 @@ class Dmax(BaseModel):
             self: Fitted Dmax model instance.
         """
         self._impl = impl
-
-        # I have no clue if this is the best options
-        # feels wrong to me
-        self.X_raw_for_plot = X
-        self.y_raw_for_plot = y
+        mask = None
 
         match impl:
             case "normal":
                 pass
             case "modified":
-                X, y = copy.deepcopy(X), copy.deepcopy(y)
-                filter = X > X[0] + threshold_above_baseline
-                X = X[filter]
-                y = y[filter]
+                X, y = np.array(X), np.array(y)
+                mask = X > X[0] + threshold_above_baseline
             case _:
                 raise ValueError(f"Unknown implementation: {impl}")
 
-        super().fit(X, y, **kwargs)
+        super().fit(X, y, _mask=mask, **kwargs)
         self.dxdt_model = self.model.dxdt()
         return self
 

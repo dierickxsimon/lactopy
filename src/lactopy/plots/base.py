@@ -11,8 +11,10 @@ class Plot:
     Base class for all plots.
     """
 
-    def __init__(self, base_lactate_model: "BaseModel"):
-        self.base_lactate_model = base_lactate_model
+    _title = "Lactate Model Plot"
+
+    def __init__(self, context: "BaseModel"):
+        self.base_lactate_model = context
 
     def __call__(self):
         return self.plot_fit()
@@ -42,7 +44,7 @@ class Plot:
         plt.plot(
             X, self.base_lactate_model.model.predict(X), color="red", label="Model"
         )
-        plt.title("Lactate Model Fit")
+        plt.title(self.__class__._title)
         plt.xlabel("Intensity")
         plt.ylabel("Lactate")
         plt.legend()
