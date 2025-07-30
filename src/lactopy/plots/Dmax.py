@@ -8,16 +8,7 @@ class DmaxPlot(Plot):
     Plot for Dmax model.
     """
 
-    def __init__(self, base_lactate_dmax_model):
-        super().__init__(base_lactate_dmax_model)
-
-    def plot_fit(self):
-        """
-        Plot the Dmax model fit.
-        """
-        ax = super().plot_fit()
-        ax.set_title("Dmax Model Fit")
-        return ax
+    _title = "Dmax Model Fit"
 
     def plot_predictions(self):
         """
