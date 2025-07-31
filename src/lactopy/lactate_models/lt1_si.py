@@ -1,6 +1,4 @@
 from numpy.typing import ArrayLike
-import numpy as np
-import copy
 
 
 from lactopy.base import BaseModel
@@ -11,10 +9,11 @@ class LT1_si(BaseModel):
     """
     Standard increment model for lactate threshold estimation.
 
-    The Standard increment method is used to estimate the first lactate threshold by identifying
+    The Standard increment method is used to estimate the first lactate
+    threshold by identifying
     the point in which the first meaningfull lactate increase occurs.
 
-    This is computed by using a standard value, preferably equlual to the lowest 
+    This is computed by using a standard value, preferably equlual to the lowest
     detectable change in lactate concentration of the measurement tool
 
     Attributes:
@@ -43,7 +42,7 @@ class LT1_si(BaseModel):
             X (ArrayLike): The independent variable (e.g., intensity).
             y (ArrayLike): The dependent variable (e.g., lactate concentration).
             si: the standard increment, defaults to 0.5
-            
+
             threshold_above_baseline (float, optional): Threshold above baseline
             for filtering in the "modified" implementation. Defaults to 0.5.
 
@@ -61,19 +60,14 @@ class LT1_si(BaseModel):
         """
         self._si = si
 
-        # I have no clue if this is the best options
-        # feels wrong to me
-        self.X_raw_for_plot = X
-        self.y_raw_for_plot = y
-
-        if si > 0 :
+        if si > 0:
             y_lt1 = y[0] + si
             self.y_lt1 = y_lt1
         else:
             raise ValueError(f"Impossible lactate change to find LT1: {si}")
 
         self.y = y
-        
+
         super().fit(X, y, **kwargs)
         return self
 

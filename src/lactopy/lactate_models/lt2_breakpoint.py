@@ -1,6 +1,4 @@
 from numpy.typing import ArrayLike
-import numpy as np
-import copy
 import piecewise_regression
 
 from lactopy.base import BaseModel
@@ -11,7 +9,7 @@ class LT2_breakpoint(BaseModel):
     """
     Determining both LT1 and LT2 based on the breakpoints in the lactate curve
     Piecewise regression module is used to identify the breakpoints
-    
+
     Plot is divided into 3 segments --> segmented regression identifies breakpoints
 
     The second breakpoint which corresponds to LT2 is extracted
@@ -41,7 +39,7 @@ class LT2_breakpoint(BaseModel):
             X (ArrayLike): The independent variable (e.g., intensity).
             y (ArrayLike): The dependent variable (e.g., lactate concentration).
             si: the standard increment, defaults to 0.5
-            
+
             method (str):
                 Method to use for fitting the model. Options are:
 
@@ -54,13 +52,6 @@ class LT2_breakpoint(BaseModel):
         Returns:
             self: Fitted LT2_breakpoint model instance.
         """
-
-        # I have no clue if this is the best options
-        # feels wrong to me
-        self.X_raw_for_plot = X
-        self.y_raw_for_plot = y
-        
-        
         super().fit(X, y, **kwargs)
         return self
 
@@ -70,12 +61,12 @@ class LT2_breakpoint(BaseModel):
 
         Returns:
             float: Predicted intensity.
-            
+
         """
-        
+
         pw_fit = piecewise_regression.Fit(self.X, self.y, n_breakpoints=2)
         pw_results = pw_fit.get_results()
-        
+
         if "breakpoint2" not in pw_results.get("estimates", {}):
             raise ValueError(
                 f"'breakpoint2' not found in regression results."

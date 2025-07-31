@@ -1,6 +1,5 @@
 from numpy.typing import ArrayLike
 import numpy as np
-import copy
 import piecewise_regression
 
 from lactopy.base import BaseModel
@@ -13,7 +12,7 @@ class LT1_loglog(BaseModel):
 
     Log-Log method is used to estimate the first lactate threshold by plotting
     the lactate response against intensity on a logaritmic scale.
-    
+
     Plot is divided into 2 segments --> segmented regression identifies breakpoint
 
     Attributes:
@@ -56,13 +55,9 @@ class LT1_loglog(BaseModel):
         """
 
         y_log = np.log(y)
+        x_log = np.log(X)
 
-        # I have no clue if this is the best options
-        # feels wrong to me
-        self.X_raw_for_plot = X
-        self.y_raw_for_plot = y_log
-        
-        super().fit(X, y_log, **kwargs)
+        super().fit(x_log, y_log, **kwargs)
         return self
 
     def predict(self) -> float:
@@ -71,12 +66,12 @@ class LT1_loglog(BaseModel):
 
         Returns:
             float: Predicted intensity.
-            
+
         """
-        
+
         pw_fit = piecewise_regression.Fit(self.X, self.y, n_breakpoints=1)
         pw_results = pw_fit.get_results()
-        
+
         if "breakpoint1" not in pw_results.get("estimates", {}):
             raise ValueError(
                 f"'breakpoint1' not found in regression results."

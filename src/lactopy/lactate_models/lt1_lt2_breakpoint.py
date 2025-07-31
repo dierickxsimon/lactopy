@@ -1,7 +1,8 @@
+from collections import namedtuple
+
 from numpy.typing import ArrayLike
-import numpy as np
-import copy
 import piecewise_regression
+
 
 from lactopy.base import BaseModel
 from lactopy.plots.lt1_lt2_breakpoint_plot import LT1_LT2_breakpoint_Plot
@@ -11,7 +12,7 @@ class LT1_LT2_breakpoint(BaseModel):
     """
     Determining both LT1 and LT2 based on the breakpoints in the lactate curve
     Piecewise regression module is used to identify the breakpoints
-    
+
     Plot is divided into 3 segments --> segmented regression identifies breakpoint
 
 
@@ -39,7 +40,7 @@ class LT1_LT2_breakpoint(BaseModel):
             X (ArrayLike): The independent variable (e.g., intensity).
             y (ArrayLike): The dependent variable (e.g., lactate concentration).
             si: the standard increment, defaults to 0.5
-            
+
 
             method (str):
                 Method to use for fitting the model. Options are:
@@ -53,28 +54,20 @@ class LT1_LT2_breakpoint(BaseModel):
         Returns:
             self: Fitted Dmax model instance.
         """
-
-        # I have no clue if this is the best options
-        # feels wrong to me
-        self.X_raw_for_plot = X
-        self.y_raw_for_plot = y
-        
-        
-        super().fit(X, y, **kwargs)
-        return self
+        return super().fit(X, y, **kwargs)
 
     def predict(self) -> float:
         """
-        Predicts intensity for LT1 and LT2 method. 
+        Predicts intensity for LT1 and LT2 method.
 
         Returns:
             float: Predicted intensity.
-            
+
         """
-        
+
         pw_fit = piecewise_regression.Fit(self.X, self.y, n_breakpoints=2)
         pw_results = pw_fit.get_results()
-        
+
         if "breakpoint1" not in pw_results.get("estimates", {}):
             raise ValueError(
                 f"'breakpoint1' not found in regression results."
@@ -91,4 +84,6 @@ class LT1_LT2_breakpoint(BaseModel):
             predicted_lt1 = pw_results["estimates"]["breakpoint1"]["estimate"]
             predicted_lt2 = pw_results["estimates"]["breakpoint2"]["estimate"]
 
-        return predicted_lt1, predicted_lt2
+        result = namedtuple("LT1_LT2_breakpoint", ["lt1", "lt2"])
+
+        return result(predicted_lt1, predicted_lt2)

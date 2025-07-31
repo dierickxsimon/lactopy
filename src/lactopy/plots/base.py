@@ -1,6 +1,9 @@
+import inspect
+
 from typing import TYPE_CHECKING
 import matplotlib.pyplot as plt
 import numpy as np
+from numpy.typing import ArrayLike
 
 if TYPE_CHECKING:
     from lactopy.lactate_models.base import BaseModel
@@ -50,15 +53,43 @@ class Plot:
         plt.legend()
         return plt.gca()
 
-    def plot_predictions(self, X):
+    @classmethod
+    def add_threshold_lines(self, ax: plt.Axes, threshold: float, color: str = "black"):
+        # TODO: create a seprate builder class for buidling plots (even building )
+        """
+        Add threshold lines to the plot.
+
+        Args:
+            threshold (float): The threshold value.
+            color (str): Color of the threshold line.
+        """
+        ax.axvline(x=threshold, color=color, linestyle="--", label="Threshold")
+        ax.legend()
+        return ax
+
+    @classmethod
+    def add_line(cls, ax: plt.Axes, x: ArrayLike, y: ArrayLike, color: str = "blue"):
+        """
+        Add a straight line to the plot.
+
+        Args:
+            ax (plt.Axes): The axes to plot on.
+            x (array-like): The x-coordinates of the line.
+            y (array-like): The y-coordinates of the line.
+            color (str): Color of the line.
+        """
+        ax.plot(x, y, color=color, label="Line")
+        return ax
+
+    def plot_predictions(self, X=None):
         """
         Plot the model predictions.
         """
-        self.plot_fit()
-        plt.axvline(
-            self.base_lactate_model.predict(X),
-            color="black",
-            label="Predictions",
-            linestyle="--",
+        predict_x = (
+            self.base_lactate_model.predict(X)
+            if "X" in inspect.getfullargspec(self.base_lactate_model.predict).args
+            else self.base_lactate_model.predict()
         )
-        return plt.gca()
+        ax = self.plot_fit()
+        Plot.add_threshold_lines(ax, predict_x)
+        return ax

@@ -1,6 +1,5 @@
 from numpy.typing import ArrayLike
 import numpy as np
-import copy
 
 
 from lactopy.base import BaseModel
@@ -11,12 +10,15 @@ class LT1_si_lowest(BaseModel):
     """
     Standard increment model for lactate threshold estimation.
 
-    The Standard increment method is used to estimate the first lactate threshold by identifying
+    The Standard increment method is used to estimate the first lactate
+    threshold by identifying
     the point in which the first meaningfull lactate increase occurs.
-    In LT1_si_lowest the lowest measurment of lactate concentration is used as reference point.
-    This means that that the reference measuement is not necessarily equal to the first measurement.
+    In LT1_si_lowest the lowest measurment of lactate concentration
+    is used as reference point.
+    This means that that the reference measuement is not necessarily
+    equal to the first measurement.
 
-    This is computed by using a standard value, preferably equlual to the lowest 
+    This is computed by using a standard value, preferably equlual to the lowest
     detectable change in lactate concentration of the measurement tool
 
     Attributes:
@@ -45,7 +47,7 @@ class LT1_si_lowest(BaseModel):
             X (ArrayLike): The independent variable (e.g., intensity).
             y (ArrayLike): The dependent variable (e.g., lactate concentration).
             si: the standard increment, defaults to 0.5
-            
+
             threshold_above_baseline (float, optional): Threshold above baseline
             for filtering in the "modified" implementation. Defaults to 0.5.
 
@@ -63,13 +65,8 @@ class LT1_si_lowest(BaseModel):
         """
         self._si = si
 
-        # I have no clue if this is the best options
-        # feels wrong to me
-        self.X_raw_for_plot = X
-        self.y_raw_for_plot = y
-
-        if si > 0 :
-            min_y_idx = np.argmin(y) # get the index of the lowest y
+        if si > 0:
+            min_y_idx = np.argmin(y)  # get the index of the lowest y
             self.min_y_idx = min_y_idx
             self.x_at_min_y = X[min_y_idx]
             self.y_lt1 = y[self.min_y_idx] + si
@@ -79,12 +76,11 @@ class LT1_si_lowest(BaseModel):
         # Use only values AFTER x_at_min_y for model fitting
         valid_mask = X >= self.x_at_min_y
         if not np.any(valid_mask):
-            raise ValueError("No X values greater than X at minimum Y. Cannot fit model.")
+            raise ValueError(
+                "No X values greater than X at minimum Y. Cannot fit model."
+            )
 
-        self.X = X[valid_mask]
-        self.y = y[valid_mask]
-
-        super().fit(self.X, self.y, **kwargs)
+        super().fit(self.X, self.y, _mask=valid_mask, **kwargs)
         return self
 
     def predict(self) -> float:
