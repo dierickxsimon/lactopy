@@ -9,6 +9,7 @@ authors = [
 requires-python = ">=3.10"
 dependencies = [
     "numpy>=2.2.5",
+    "piecewise-regression>=1.5.0",
     "scikit-learn>=1.6.1",
     "scipy>=1.15.2",
 ]

@@ -7,7 +7,7 @@ class OBLA(BaseModel):
     This model uses a 3rd degree polynomial to fit the lactate data.
     """
 
-    def predict(self, lactate_value: float) -> float:
+    def predict(self, X: float) -> float:
         """
         Predicts intensity at a given lactate value.
 
@@ -19,4 +19,4 @@ class OBLA(BaseModel):
             float:
                 Predicted intensity.
         """
-        return self.model.predict_inverse(lactate_value)
+        return self.model.predict_inverse(X)
