@@ -1,3 +1,4 @@
+import copy
 import numpy as np
 from scipy.interpolate import CubicSpline
 
@@ -34,5 +35,6 @@ class CubicAdaptor:
         return roots[0]
 
     def dxdt(self):
-        self._spline = self._spline.derivative()
-        return self
+        r_obj = copy.deepcopy(self)
+        r_obj._spline = r_obj._spline.derivative()
+        return r_obj

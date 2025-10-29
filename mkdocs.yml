@@ -84,5 +84,11 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.mark
   - attr_list
+  - md_in_html
+  - pymdownx.blocks.caption
   - toc:
       toc_depth: 3
+
+
+extra_css:
+  - css/custom_css.css

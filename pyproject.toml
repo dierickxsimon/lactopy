@@ -26,6 +26,7 @@ dev = [
     "mkdocs-literate-nav>=0.6.2",
     "mkdocs-material>=9.6.12",
     "mkdocstrings-python>=1.16.10",
+    "nb-clean>=4.0.1",
     "pandas>=2.2.3",
     "pre-commit>=4.2.0",
     "pytest>=8.3.5",
