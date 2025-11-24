@@ -35,6 +35,7 @@ class Dmax(BaseModel):
         y: ArrayLike,
         impl: str = "normal",
         threshold_above_baseline=0.4,
+        method="4th_poly",
         **kwargs,
     ):
         """
@@ -44,11 +45,9 @@ class Dmax(BaseModel):
             X (ArrayLike): The independent variable (e.g., intensity).
             y (ArrayLike): The dependent variable (e.g., lactate concentration).
             impl (str, optional): The implementation type. Options are "normal" or
-            "modified".
-                Defaults to "normal".
+                "modified". Defaults to "normal".
             threshold_above_baseline (float, optional): Threshold above baseline
-            for filtering
-                in the "modified" implementation. Defaults to 0.4.
+                for filtering in the "modified" implementation. Defaults to 0.4.
 
             method (str):
                 Method to use for fitting the model. Options are:
@@ -60,7 +59,7 @@ class Dmax(BaseModel):
                 Defaults to "4th_poly".
 
         Returns:
-            self: Fitted Dmax model instance.
+            self (Dmax): Fitted Dmax model instance.
         """
         self._impl = impl
         mask = None
@@ -74,7 +73,7 @@ class Dmax(BaseModel):
             case _:
                 raise ValueError(f"Unknown implementation: {impl}")
 
-        super().fit(X, y, _mask=mask, **kwargs)
+        super().fit(X, y, method=method, _mask=mask)
         self.dxdt_model = self.model.dxdt()
         return self
 
