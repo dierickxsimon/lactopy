@@ -19,6 +19,7 @@ build-backend = "hatchling.build"
 
 [dependency-groups]
 dev = [
+    "diff-cover>=9.7.2",
     "ipykernel>=6.29.5",
     "matplotlib>=3.10.1",
     "mkdocs>=1.6.1",
@@ -26,10 +27,12 @@ dev = [
     "mkdocs-literate-nav>=0.6.2",
     "mkdocs-material>=9.6.12",
     "mkdocstrings-python>=1.16.10",
+    "mktestdocs>=0.2.5",
     "nb-clean>=4.0.1",
     "pandas>=2.2.3",
     "pre-commit>=4.2.0",
     "pytest>=8.3.5",
+    "pytest-cov>=7.0.0",
 ]
 
 [tool.uv.sources]
